@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ClientDNA {
+  id              String   @id @default(uuid())
+  clientName      String   @map("client_name")
+  industry        String
+  targetAudience  Json     @map("target_audience")
+  brandTone       String   @map("brand_tone")
+  geography       Json
+  psychographics  Json
+  products        Json?
+  competitors     Json?
+  version         Int      @default(1)
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relation to Campaigns
+  campaigns       Campaign[]
+
+  @@map("client_dna")
+}
+model Campaign {
+  id              String   @id @default(uuid())
+  name            String
+  objective       String   // 'awareness', 'engagement', 'conversion', 'leads'
+  clientDnaId     String   @map("client_dna_id")
+  platforms       Json     // ['meta', 'linkedin', 'youtube', 'google']
+  contentPillars  Json     @map("content_pillars") // AI-generated content themes
+  dateRange       Json     @map("date_range") // { start: Date, end: Date }
+  status          String   @default("draft") // 'draft', 'active', 'paused', 'completed'
+  kpis            Json?    // Key performance indicators
+  budget          Json?    // Budget allocation
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relation to Client DNA
+  clientDna       ClientDNA @relation(fields: [clientDnaId], references: [id])
+
+  @@map("campaigns")
+}

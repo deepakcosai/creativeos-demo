@@ -1,0 +1,21 @@
+{
+  "name": "creativeos-ai",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "services/*"
+  ],
+  "scripts": {
+    "dev:web": "cd apps/web-client && npm run dev",
+    "dev:api": "cd apps/api-gateway && npm run start:dev",
+    "dev:dna": "cd services/client-dna-service && npm run start:dev",
+    "docker:up": "cd infra/docker && docker-compose up -d",
+    "docker:down": "cd infra/docker && docker-compose down",
+    "docker:logs": "cd infra/docker && docker-compose logs -f",
+    "install:all": "npm install && cd apps/web-client && npm install && cd ../api-gateway && npm install && cd ../../services/client-dna-service && npm install"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.0"
+  }
+}
