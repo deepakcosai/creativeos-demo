@@ -4,7 +4,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Environment
+# Environment variables
 .env
 .env.local
 .env.*.local
@@ -15,6 +15,12 @@ build/
 .next/
 out/
 
+# Database
+*.db
+*.sqlite
+postgres_data/
+redis_data/
+
 # IDE
 .vscode/
 .idea/
@@ -22,21 +28,16 @@ out/
 *.swo
 
 # OS
-.DS_Store
-Thumbs.db
-
-# Docker
-docker-compose.override.yml
+.DS_StoreThumbs.db
 
 # Logs
 logs/
 *.log
 
-# Database
-*.db
-*.sqlite
+# Prisma
+prisma/migrations/
 
-# Misc
-.cache/
+# Temporary
 temp/
 tmp/
+.cache/
