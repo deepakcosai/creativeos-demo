@@ -3,17 +3,24 @@ import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn', 'log'],
+  });
 
-  // Enable CORS - UPDATED
+  // CORS - Allow all Vercel domains
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      /\.vercel\.app$/,
+      /\.railway\.app$/,
+    ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
   });
 
-  // Enable validation
+  // Validation
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -21,12 +28,17 @@ async function bootstrap() {
     }),
   );
 
-  // Set global prefix
+  // API Prefix
   app.setGlobalPrefix('api');
 
-  const port = 3002;
-  await app.listen(port);
-  console.log(`🚀 DNA Service: http://localhost:${port}/api`);
-  console.log(`✅ CORS enabled for: http://localhost:3000`);
+  // Port for Railway
+  const port = process.env.PORT || 3002;
+  
+  // IMPORTANT: Listen on 0.0.0.0 for Railway
+  await app.listen(port, '0.0.0.0');
+  
+  console.log(`🚀 CreativeOS Backend running on port ${port}`);
+  console.log(`📡 API available at: http://0.0.0.0:${port}/api`);
 }
+
 bootstrap();

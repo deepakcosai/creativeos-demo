@@ -1,11 +1,30 @@
 {
   "name": "client-dna-service",
   "version": "0.0.1",
+  "description": "CreativeOS Client DNA Service",
   "scripts": {
     "build": "nest build",
     "start": "nest start",
     "start:dev": "nest start --watch",
-    "start:prod": "node dist/main",
-    "prisma:generate": "prisma generate"
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/mapped-types": "^2.0.2",
+    "@nestjs/platform-express": "^10.0.0",
+    "@prisma/client": "^5.22.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.0.0",
+    "@nestjs/schematics": "^10.0.0",
+    "@types/node": "^20.3.1",
+    "prisma": "^5.22.0",
+    "typescript": "^5.1.6"
   }
 }
